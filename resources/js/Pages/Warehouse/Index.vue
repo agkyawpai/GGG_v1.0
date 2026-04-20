@@ -4,7 +4,7 @@ import { router } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import { useAutoAnimate } from '@formkit/auto-animate/vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import TypeBadge from '@/Components/TypeBadge.vue';
+import TypeBadge from '@/components/TypeBadge.vue';
 import { Button } from '@/components/ui/button';
 import {
     Card, CardContent, CardHeader, CardTitle, CardFooter,

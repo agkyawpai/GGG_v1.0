@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import OrderCard from '@/Components/OrderCard.vue';
+import OrderCard from '@/components/OrderCard.vue';
 import { useOrderBoard } from '@/Composables/useOrderBoard';
 import { useAutoAnimate } from '@formkit/auto-animate/vue';
 

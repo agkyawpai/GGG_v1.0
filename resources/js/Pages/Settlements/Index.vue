@@ -10,7 +10,7 @@ import {
     FlexRender,
 } from '@tanstack/vue-table';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import TypeBadge from '@/Components/TypeBadge.vue';
+import TypeBadge from '@/components/TypeBadge.vue';
 import { Button } from '@/components/ui/button';
 import {
     Table, TableBody, TableCell, TableHead,

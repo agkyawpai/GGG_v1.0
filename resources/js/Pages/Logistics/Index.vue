@@ -11,8 +11,8 @@ import {
 import { useForm } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import TypeBadge from '@/Components/TypeBadge.vue';
-import StatusBadge from '@/Components/StatusBadge.vue';
+import TypeBadge from '@/components/TypeBadge.vue';
+import StatusBadge from '@/components/StatusBadge.vue';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {

@@ -21,7 +21,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'flash' => $request->session()->get('flash'),
+            'flash'  => $request->session()->get('flash'),
+            'locale' => session('locale', config('app.locale')),
         ];
     }
 }

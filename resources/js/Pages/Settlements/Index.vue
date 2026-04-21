@@ -1,5 +1,6 @@
 <script setup>
 import { computed, h, ref } from 'vue';
+import { t } from '@/Composables/useLocale';
 import {
     useVueTable,
     createColumnHelper,
@@ -56,7 +57,7 @@ const col = createColumnHelper();
 const columns = [
     col.accessor('settled_at', {
         id:     'date',
-        header: 'Date',
+        header: () => t('date'),
         cell:   ({ getValue }) => {
             const v = getValue();
             if (!v) return '—';
@@ -69,42 +70,42 @@ const columns = [
 
     col.accessor((row) => row.order?.ulid ?? '', {
         id:     'ulid',
-        header: 'Order',
+        header: () => t('order'),
         cell:   ({ getValue }) =>
             h('span', { class: 'font-mono text-xs text-gray-600' }, getValue()),
     }),
 
     col.accessor((row) => row.order?.type ?? '', {
         id:     'type',
-        header: 'Type',
+        header: () => t('type'),
         cell:   ({ getValue }) => h(TypeBadge, { type: getValue() }),
         enableGlobalFilter: false,
     }),
 
     col.accessor((row) => row.order?.shop?.name ?? '', {
         id:     'shop',
-        header: 'Shop',
+        header: () => t('shop'),
         cell:   ({ getValue }) =>
             h('span', { class: 'text-sm text-gray-800' }, getValue()),
     }),
 
     col.accessor('cod_collected', {
         id:     'cod',
-        header: 'COD Collected',
+        header: () => t('cod_collected'),
         cell:   ({ getValue }) => fmtMMK(getValue()),
         enableGlobalFilter: false,
     }),
 
     col.accessor('delivery_fee', {
         id:     'fee',
-        header: 'Delivery Fee',
+        header: () => t('delivery_fee_header'),
         cell:   ({ getValue }) => fmtMMK(getValue()),
         enableGlobalFilter: false,
     }),
 
     col.accessor('net_amount', {
         id:     'net',
-        header: 'Net Amount',
+        header: () => t('net_amount'),
         cell:   ({ getValue }) => {
             const v = Number(getValue());
             return h(
@@ -118,7 +119,7 @@ const columns = [
 
     col.accessor((row) => row.settled_by?.name ?? '', {
         id:     'settled_by',
-        header: 'Settled By',
+        header: () => t('settled_by'),
         cell:   ({ getValue }) =>
             h('span', { class: 'text-sm text-gray-600' }, getValue() || '—'),
     }),
@@ -167,6 +168,11 @@ const summary = computed(() => {
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
+function fmtDate(val) {
+    if (!val) return '—';
+    return new Date(val).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
 function fmtMMK(val) {
     return `${Number(val).toLocaleString()} MMK`;
 }
@@ -213,24 +219,24 @@ function csvExport() {
 
             <!-- Page heading -->
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold text-gray-900">Settlements</h1>
+                <h1 class="text-2xl font-bold text-gray-900">{{ t('settlements') }}</h1>
             </div>
 
             <!-- Summary bar -->
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="flex flex-col gap-4 sm:flex-row">
 
                 <!-- Total COD -->
                 <Card>
                     <CardContent class="pt-5 pb-4 px-5">
                         <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
-                            Total COD Collected
+                            {{ t('total_cod_collected') }}
                         </p>
                         <p class="text-2xl font-bold text-gray-900 tabular-nums">
                             {{ fmtMMK(summary.cod) }}
                         </p>
                         <p class="mt-1 text-xs text-gray-400">
                             {{ table.getFilteredRowModel().rows.length }}
-                            {{ table.getFilteredRowModel().rows.length === 1 ? 'settlement' : 'settlements' }}
+                            {{ t('settlements_count') }}
                         </p>
                     </CardContent>
                 </Card>
@@ -239,13 +245,13 @@ function csvExport() {
                 <Card>
                     <CardContent class="pt-5 pb-4 px-5">
                         <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
-                            Total Delivery Fees
+                            {{ t('total_delivery_fees') }}
                         </p>
                         <p class="text-2xl font-bold text-gray-900 tabular-nums">
                             {{ fmtMMK(summary.fees) }}
                         </p>
                         <p class="mt-1 text-xs text-gray-400">
-                            across filtered rows
+                            {{ t('across_filtered_rows') }}
                         </p>
                     </CardContent>
                 </Card>
@@ -254,7 +260,7 @@ function csvExport() {
                 <Card>
                     <CardContent class="pt-5 pb-4 px-5">
                         <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
-                            Net Amount
+                            {{ t('net_amount') }}
                         </p>
                         <p
                             class="text-2xl font-bold tabular-nums"
@@ -263,7 +269,7 @@ function csvExport() {
                             {{ fmtMMK(summary.net) }}
                         </p>
                         <p class="mt-1 text-xs text-gray-400">
-                            COD minus all costs
+                            {{ t('cod_minus_costs') }}
                         </p>
                     </CardContent>
                 </Card>
@@ -271,52 +277,52 @@ function csvExport() {
             </div>
 
             <!-- Toolbar -->
-            <div class="flex flex-wrap items-center gap-3">
+            <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3">
 
                 <!-- Global search -->
-                <div class="relative flex-1 min-w-48">
+                <div class="relative w-full sm:flex-1 sm:min-w-48">
                     <Search class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                     <input
                         :value="globalFilter"
                         @input="globalFilter = $event.target.value"
                         type="text"
-                        placeholder="Search orders, shops…"
+                        :placeholder="t('search_orders_shops')"
                         class="w-full rounded-lg border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
                 </div>
 
                 <!-- Date from -->
-                <div class="flex items-center gap-1.5">
-                    <label for="date-from" class="text-xs text-gray-500 shrink-0">From</label>
+                <div class="flex items-center gap-1.5 w-full sm:w-auto">
+                    <label for="date-from" class="text-xs text-gray-500 shrink-0">{{ t('from') }}</label>
                     <input
                         id="date-from"
                         v-model="dateFrom"
                         type="date"
-                        class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        class="flex-1 sm:flex-none rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
                 </div>
 
                 <!-- Date to -->
-                <div class="flex items-center gap-1.5">
-                    <label for="date-to" class="text-xs text-gray-500 shrink-0">To</label>
+                <div class="flex items-center gap-1.5 w-full sm:w-auto">
+                    <label for="date-to" class="text-xs text-gray-500 shrink-0">{{ t('to') }}</label>
                     <input
                         id="date-to"
                         v-model="dateTo"
                         type="date"
-                        class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        class="flex-1 sm:flex-none rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
                 </div>
 
                 <!-- Column visibility toggle -->
-                <div class="relative">
+                <div class="relative w-full sm:w-auto flex sm:block">
                     <Button
                         variant="outline"
                         size="sm"
                         @click="colPickerOpen = !colPickerOpen"
-                        class="gap-1.5"
+                        class="gap-1.5 flex-1 sm:flex-none"
                     >
                         <SlidersHorizontal class="w-4 h-4" />
-                        Columns
+                        {{ t('columns') }}
                     </Button>
 
                     <div
@@ -351,16 +357,42 @@ function csvExport() {
                     variant="outline"
                     size="sm"
                     @click="csvExport"
-                    class="gap-1.5 shrink-0"
+                    class="gap-1.5 w-full sm:w-auto"
                 >
                     <Download class="w-4 h-4" />
-                    Export CSV
+                    {{ t('export_csv') }}
                 </Button>
 
             </div>
 
+            <!-- Mobile card list -->
+            <div class="block md:hidden space-y-3">
+                <Card v-for="row in table.getRowModel().rows" :key="row.id">
+                    <CardContent class="px-4 py-3 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-400">{{ fmtDate(row.original.settled_at) }}</span>
+                            <TypeBadge :type="row.original.order?.type ?? ''" />
+                        </div>
+                        <p class="font-mono text-xs text-gray-500">{{ row.original.order?.ulid ?? '—' }}</p>
+                        <p class="text-sm text-gray-800">{{ row.original.order?.shop?.name ?? '—' }}</p>
+                        <div class="flex items-center justify-between pt-1 border-t border-gray-100">
+                            <span class="text-xs text-gray-500">{{ fmtMMK(row.original.cod_collected) }}</span>
+                            <span
+                                class="text-sm font-semibold"
+                                :class="Number(row.original.net_amount) >= 0 ? 'text-green-600' : 'text-red-600'"
+                            >
+                                {{ fmtMMK(row.original.net_amount) }}
+                            </span>
+                        </div>
+                    </CardContent>
+                </Card>
+                <p v-if="!table.getRowModel().rows.length" class="py-12 text-center text-gray-400 text-sm">
+                    {{ t('no_settlements') }}
+                </p>
+            </div>
+
             <!-- Table -->
-            <div class="rounded-xl border border-gray-200 bg-white overflow-hidden">
+            <div class="hidden md:block rounded-xl border border-gray-200 bg-white overflow-hidden">
                 <Table>
                     <TableHeader>
                         <TableRow
@@ -422,7 +454,7 @@ function csvExport() {
 
                         <TableEmpty v-else :colspan="table.getAllLeafColumns().length">
                             <div class="py-12 text-center text-gray-400 text-sm">
-                                No settlements match the current filters.
+                                {{ t('no_settlements') }}
                             </div>
                         </TableEmpty>
                     </TableBody>
@@ -434,20 +466,20 @@ function csvExport() {
 
                 <!-- Row count -->
                 <p class="text-gray-400">
-                    Showing
+                    {{ t('showing') }}
                     {{ table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1 }}
                     –
                     {{ Math.min(
                         (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
                         table.getFilteredRowModel().rows.length
                     ) }}
-                    of {{ table.getFilteredRowModel().rows.length }} settlements
+                    {{ t('of') }} {{ table.getFilteredRowModel().rows.length }} {{ t('settlements_label') }}
                 </p>
 
                 <div class="flex items-center gap-3">
                     <!-- Page size -->
                     <div class="flex items-center gap-1.5">
-                        <label for="page-size" class="text-xs text-gray-400 shrink-0">Rows</label>
+                        <label for="page-size" class="text-xs text-gray-400 shrink-0">{{ t('rows') }}</label>
                         <select
                             id="page-size"
                             :value="table.getState().pagination.pageSize"

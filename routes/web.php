@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\LogisticsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SettlementController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/locale', [LocaleController::class, 'show'])->name('locale.show');
+Route::post('/locale', [LocaleController::class, 'update'])->name('locale.update');
 
 // ── Auth (guest only) ─────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {

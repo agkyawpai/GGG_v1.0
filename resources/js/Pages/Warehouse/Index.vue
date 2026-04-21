@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
+import { t } from '@/Composables/useLocale';
 import { router } from '@inertiajs/vue3';
 import { toast } from 'vue-sonner';
 import { useAutoAnimate } from '@formkit/auto-animate/vue';
@@ -36,12 +37,12 @@ function dispatch(item) {
     router.patch(route('warehouse.dispatch', item.id), {}, {
         onSuccess: () => {
             items.value = items.value.filter((i) => i.id !== item.id);
-            toast.success('Item dispatched', {
-                description: `Order #${item.order?.ulid} sent out`,
+            toast.success(t('item_dispatched'), {
+                description: `${t('order_hash')}${item.order?.ulid} ${t('item_dispatched_desc')}`,
             });
         },
         onError: () => {
-            toast.error('Dispatch failed — please try again');
+            toast.error(t('dispatch_failed'));
         },
         onFinish: () => {
             dispatchingId.value = null;
@@ -60,10 +61,10 @@ function fmtDate(val) {
 }
 
 const warehouseStatusLabel = {
-    in_transit: 'In Transit',
-    received:   'Received',
-    stored:     'Stored',
-    dispatched: 'Dispatched',
+    get in_transit() { return t('in_transit'); },
+    get received()   { return t('received'); },
+    get stored()     { return t('stored'); },
+    get dispatched() { return t('dispatched'); },
 };
 
 // ── real-time ─────────────────────────────────────────────────────────────────
@@ -89,18 +90,18 @@ onUnmounted(() => {
             <!-- Page heading -->
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Warehouse</h1>
-                    <p class="mt-0.5 text-sm text-gray-400">Type B items currently in storage</p>
+                    <h1 class="text-2xl font-bold text-gray-900">{{ t('warehouse') }}</h1>
+                    <p class="mt-0.5 text-sm text-gray-400">{{ t('warehouse_subtitle') }}</p>
                 </div>
                 <span class="text-sm text-gray-400 tabular-nums">
-                    {{ items.length }} item{{ items.length === 1 ? '' : 's' }}
+                    {{ items.length }} {{ t('items_count') }}
                 </span>
             </div>
 
             <!-- Card grid -->
             <div
                 ref="gridRef"
-                class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
                 <Card
                     v-for="item in items"
@@ -155,7 +156,14 @@ onUnmounted(() => {
                                     ? 'bg-blue-100 text-blue-700'
                                     : 'bg-amber-100 text-amber-700'"
                             >
-                                {{ item.shipped_via === 'bus' ? 'Bus' : 'Express' }}
+                                {{ item.shipped_via === 'bus' ? t('bus') : t('express') }}
+                            </span>
+                        </div>
+
+                        <!-- Received date chip -->
+                        <div>
+                            <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500">
+                                {{ fmtDate(item.received_at) }}
                             </span>
                         </div>
 
@@ -164,7 +172,7 @@ onUnmounted(() => {
                     <!-- Card footer: Dispatch button -->
                     <CardFooter class="pt-3">
                         <Button
-                            class="w-full gap-2 bg-teal-600 hover:bg-teal-700 text-white"
+                            class="w-full gap-2 bg-teal-600 hover:bg-teal-700 text-white min-h-[44px]"
                             :disabled="dispatchingId !== null"
                             @click="dispatch(item)"
                         >
@@ -172,7 +180,7 @@ onUnmounted(() => {
                                 class="w-4 h-4"
                                 :class="dispatchingId === item.id ? 'animate-pulse' : ''"
                             />
-                            {{ dispatchingId === item.id ? 'Dispatching…' : 'Dispatch' }}
+                            {{ dispatchingId === item.id ? t('dispatching') : t('dispatch') }}
                         </Button>
                     </CardFooter>
                 </Card>
@@ -184,8 +192,8 @@ onUnmounted(() => {
                 class="flex flex-col items-center justify-center rounded-xl border border-dashed border-gray-200 bg-white py-20 text-center"
             >
                 <Warehouse class="w-10 h-10 text-gray-300 mb-3" />
-                <p class="text-sm font-medium text-gray-500">No items in warehouse</p>
-                <p class="mt-1 text-xs text-gray-400">Stored Type B items will appear here</p>
+                <p class="text-sm font-medium text-gray-500">{{ t('no_items_warehouse') }}</p>
+                <p class="mt-1 text-xs text-gray-400">{{ t('warehouse_empty_subtitle') }}</p>
             </div>
 
         </div>

@@ -21,10 +21,9 @@ function submit() {
     <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
         <div class="w-full max-w-sm">
 
-            <!-- Logo / wordmark -->
-            <div class="mb-8 text-center">
-                <span class="text-3xl font-bold tracking-tight text-purple-700">GGG</span>
-                <p class="mt-1 text-sm text-gray-400">Go · Grab · Get</p>
+            <!-- Logo -->
+            <div class="mb-8 flex justify-center">
+                <img src="/images/ggg_logo.png" alt="GGG — Go Grab Get" class="h-24 w-auto" />
             </div>
 
             <div class="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">

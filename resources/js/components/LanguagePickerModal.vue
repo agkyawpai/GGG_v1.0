@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/Components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { setLocale } from '@/Composables/useLocale';
 
 const open = ref(false);

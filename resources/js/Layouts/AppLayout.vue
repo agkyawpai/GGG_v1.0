@@ -4,9 +4,9 @@ import { Toaster, toast } from 'vue-sonner';
 import { computed, watch, onMounted, ref } from 'vue';
 import { LayoutDashboard, PackagePlus, Banknote, Truck, Warehouse, LogOut, Menu } from 'lucide-vue-next';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import BottomNav from '@/Components/BottomNav.vue';
-import LanguagePickerModal from '@/Components/LanguagePickerModal.vue';
-import LanguageToggle from '@/Components/LanguageToggle.vue';
+import BottomNav from '@/components/BottomNav.vue';
+import LanguagePickerModal from '@/components/LanguagePickerModal.vue';
+import LanguageToggle from '@/components/LanguageToggle.vue';
 import { setLocale, t } from '@/Composables/useLocale';
 
 const page = usePage();

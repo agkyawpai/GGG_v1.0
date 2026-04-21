@@ -8,7 +8,7 @@
 
 <script setup>
 import { Globe } from 'lucide-vue-next';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import { locale, setLocale } from '@/Composables/useLocale';
 
 function toggle() {

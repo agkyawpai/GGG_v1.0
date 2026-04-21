@@ -48,7 +48,7 @@ const nav = computed(() => [
         <!-- Mobile topbar -->
         <header class="md:hidden fixed top-0 inset-x-0 z-30 flex items-center justify-between px-4 h-14 bg-white border-b border-gray-200">
             <div>
-                <img src="/images/ggg_logo.png" alt="GGG" class="h-8 w-auto" />
+                <img src="/images/ggg-logo-nav.svg" alt="GGG" class="h-8 w-auto" />
             </div>
             <button @click="mobileOpen = true" class="p-2 rounded-lg text-gray-500 hover:bg-gray-100">
                 <Menu class="w-5 h-5" />
@@ -60,7 +60,7 @@ const nav = computed(() => [
             <SheetContent side="left" class="w-64 p-0 flex flex-col">
                 <SheetHeader class="px-5 py-4 border-b border-gray-100">
                     <SheetTitle class="text-left">
-                        <img src="/images/ggg_logo.png" alt="GGG" class="h-10 w-auto" />
+                        <img src="/images/ggg-logo-nav.svg" alt="GGG" class="h-10 w-auto" />
                     </SheetTitle>
                 </SheetHeader>
                 <nav class="flex-1 p-3 space-y-0.5">
@@ -94,7 +94,7 @@ const nav = computed(() => [
         <!-- Sidebar -->
         <aside class="hidden md:flex w-56 shrink-0 flex-col bg-white border-r border-gray-200">
             <div class="px-5 py-4 border-b border-gray-100">
-                <img src="/images/ggg_logo.png" alt="GGG" class="h-10 w-auto" />
+                <img src="/images/ggg-logo-nav.svg" alt="GGG" class="h-10 w-auto" />
             </div>
             <nav class="flex-1 p-3 space-y-0.5">
                 <Link

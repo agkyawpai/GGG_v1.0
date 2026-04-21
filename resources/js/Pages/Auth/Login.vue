@@ -23,7 +23,7 @@ function submit() {
 
             <!-- Logo -->
             <div class="mb-8 flex justify-center">
-                <img src="/images/ggg_logo.png" alt="GGG — Go Grab Get" class="h-24 w-auto" />
+                <img src="/images/ggg-logo-login.svg" alt="GGG — Go Grab Get" class="h-24 w-auto" />
             </div>
 
             <div class="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">

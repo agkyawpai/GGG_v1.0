@@ -1,0 +1,15 @@
+<svg width="160" height="40" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>G.G.G Delivery</title>
+
+  <!-- Icon square -->
+  <rect x="0" y="0" width="40" height="40" rx="8" fill="#6d28d9"/>
+  <text x="20" y="30" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="0.4">G</text>
+  <text x="14" y="28" font-family="Georgia,'Times New Roman',serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle">G</text>
+  <text x="28" y="28" font-family="Georgia,'Times New Roman',serif" font-size="18" font-weight="700" fill="#ffffff" text-anchor="middle" opacity="0.5">G</text>
+  <path d="M26 29 L35 29 L31 25 M35 29 L31 33" fill="none" stroke="#c4b5fd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Wordmark -->
+  <text x="50" y="18" font-family="Georgia,'Times New Roman',serif" font-size="16" font-weight="700" fill="#6d28d9" text-anchor="start" letter-spacing="-0.5">G.G.G</text>
+  <text x="51" y="30" font-family="'Helvetica Neue',Arial,sans-serif" font-size="7" font-weight="600" fill="#7c3aed" text-anchor="start" letter-spacing="2.5">DELIVERY</text>
+
+</svg>
